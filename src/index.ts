@@ -241,6 +241,31 @@ export type {
   AITaskResult,
 } from './features/ai';
 
+// Features - Conflict Resolution 冲突解决
+export {
+  ConflictType,
+  ConflictStrategy,
+  ConflictResolver,
+  createConflictResolver,
+} from './features/conflict';
+
+export type {
+  Conflict,
+  ConflictResolution,
+} from './features/conflict';
+
+// Features - Dependency Management 依赖管理
+export {
+  DependencyType,
+  DependencyManager,
+  createDependencyManager,
+} from './features/dependency';
+
+export type {
+  Dependency,
+  DependencyCheckResult,
+} from './features/dependency';
+
 // 版本信息
 export const VERSION = '1.0.0';
 export const NAME = 'qianqian';
