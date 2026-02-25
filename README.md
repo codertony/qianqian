@@ -268,6 +268,8 @@ $ acl sync
 
 ## 🏗️ 项目结构
 
+### 用户资产仓库结构
+
 ```
 acl-assets/                    # 你的 GitHub 私有仓库
 ├── prompts/                   # Prompt 资产
@@ -284,6 +286,100 @@ acl-assets/                    # 你的 GitHub 私有仓库
 └── .acl/                      # ACL 配置
     └── config.jsonc
 ```
+
+### 源码项目结构
+
+```
+qianqian/                          # 项目根目录
+├── 📁 src/                        # 源代码主目录
+│   ├── 📁 core/                   # 核心领域模型（参考 oh-my-opencode）
+│   │   ├── asset/                 # 资产领域：Prompt/Skill/Agent/Flow 定义
+│   │   ├── platform/              # 平台领域：Cursor/OpenCode/ClaudeCode 抽象
+│   │   └── sync/                  # 同步领域：Pull/Push/Diff 操作
+│   │
+│   ├── 📁 cli/                    # 命令行接口
+│   │   ├── commands/              # 命令实现（init, capture, sync, pull, push...）
+│   │   ├── config-manager/        # 配置管理
+│   │   └── doctor/                # 诊断工具
+│   │
+│   ├── 📁 config/                 # 配置系统
+│   │   ├── schema/                # Zod Schema 定义（运行时校验）
+│   │   └── adapters/              # 配置适配器（YAML/JSON/JSONC）
+│   │
+│   ├── 📁 features/               # 功能模块（参考 oh-my-opencode features）
+│   │   ├── asset-manager/         # 资产管理核心
+│   │   ├── github-sync/           # GitHub 同步引擎
+│   │   ├── platform-adapters/     # 平台适配器
+│   │   ├── conflict-resolver/     # 冲突解决引擎
+│   │   ├── version-control/       # 版本控制集成
+│   │   └── ai-extractor/          # AI 辅助能力提取
+│   │
+│   ├── 📁 hooks/                  # 生命周期钩子
+│   │   ├── pre-sync/              # 同步前钩子
+│   │   ├── post-sync/             # 同步后钩子
+│   │   └── validation/            # 校验钩子
+│   │
+│   ├── 📁 tools/                  # 工具封装
+│   │   ├── git/                   # Git 操作封装
+│   │   ├── github/                # GitHub API 封装
+│   │   ├── ide-detect/            # IDE 环境检测
+│   │   ├── file-ops/              # 文件操作工具
+│   │   └── template-engine/       # 模板引擎
+│   │
+│   ├── 📁 shared/                 # 共享工具
+│   │   ├── utils/                 # 通用工具函数
+│   │   ├── types/                 # 全局类型定义
+│   │   └── constants/             # 常量定义
+│   │
+│   └── 📄 index.ts                # 入口文件
+│
+├── 📁 docs/                       # 文档目录
+│   ├── 📁 architecture/           # 架构文档
+│   │   ├── diagrams/              # 架构图
+│   │   ├── decisions/             # 架构决策记录（ADR）
+│   │   └── project-structure.md   # 项目结构详细说明
+│   ├── 📁 guide/                  # 用户指南
+│   │   ├── quickstart/            # 快速开始
+│   │   └── advanced/              # 高级用法
+│   ├── 📁 reference/              # 参考文档
+│   │   ├── commands/              # 命令参考
+│   │   ├── api/                   # API 文档
+│   │   └── config/                # 配置参考
+│   └── 📁 api/                    # 程序化 API 文档
+│
+├── 📁 examples/                   # 示例资产
+│   ├── prompts/                   # Prompt 示例
+│   ├── skills/                    # Skill 示例
+│   ├── agents/                    # Agent 示例
+│   └── flows/                     # Flow 示例
+│
+├── 📁 test/                       # 测试目录
+│   ├── unit/                      # 单元测试
+│   ├── integration/               # 集成测试
+│   ├── e2e/                       # 端到端测试
+│   └── fixtures/                  # 测试夹具
+│
+├── 📁 bin/                        # 可执行文件
+├── 📁 script/                     # 构建脚本
+├── 📁 packages/                   # 多平台发布包
+├── 📁 assets/                     # 静态资源
+├── 📄 README.md                   # 项目说明
+├── 📄 package.json                # npm 配置
+├── 📄 tsconfig.json               # TypeScript 配置
+└── 📄 LICENSE                     # 许可证
+```
+
+### 架构参考
+
+本项目架构参考 [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode) 的设计哲学：
+
+- **模块化分层**: Core → Features → CLI 单向依赖
+- **Hook 系统**: Pre/Post/Validation 三层生命周期钩子
+- **Agent 设计**: 领域特定的 AI Agent（Capturer, Syncer, Analyzer）
+- **配置合并**: 用户配置 → 项目配置 → 默认配置
+- **工具注册**: 通过注册表模式统一管理工具
+
+详细架构文档：[docs/architecture/project-structure.md](./docs/architecture/project-structure.md)
 
 ---
 

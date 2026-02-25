@@ -1,0 +1,16 @@
+{
+  "name": "code-reviewer",
+  "version": "1.0.0",
+  "description": "自动化的代码审查助手",
+  "type": "skill",
+  "entry": "review.ts",
+  "permissions": {
+    "filesystem": ["read"],
+    "network": false,
+    "shell": false
+  },
+  "dependencies": [],
+  "tags": ["code-review", "quality"],
+  "author": "qianqian-user",
+  "license": "MIT"
+}

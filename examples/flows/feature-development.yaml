@@ -1,0 +1,98 @@
+# Flow: 新功能开发流程
+
+> **类型**: Flow  
+> **版本**: 1.0.0  
+
+---
+
+## 流程描述
+
+标准化的功能开发流程，从需求分析到代码审查。
+
+## 流程定义
+
+```yaml
+name: feature-development
+version: "1.0.0"
+variables:
+  feature_name:
+    type: string
+    description: "功能名称"
+  tech_stack:
+    type: enum
+    options: [react, vue, node, python]
+    default: react
+
+steps:
+  - id: analyze
+    name: 需求分析
+    agent: architect-assistant
+    action: analyze_requirements
+    inputs:
+      feature_name: "{{feature_name}}"
+    outputs:
+      - requirements
+      - constraints
+    next: design
+
+  - id: design
+    name: 架构设计
+    agent: architect-assistant
+    action: design_architecture
+    inputs:
+      requirements: "{{steps.analyze.outputs.requirements}}"
+      tech_stack: "{{tech_stack}}"
+    outputs:
+      - architecture_doc
+      - tech_spec
+    next: implement
+
+  - id: implement
+    name: 代码实现
+    agent: sisyphus
+    action: implement_feature
+    inputs:
+      tech_spec: "{{steps.design.outputs.tech_spec}}"
+    outputs:
+      - code_changes
+      - tests
+    next: [review, test]
+
+  - id: review
+    name: 代码审查
+    agent: code-reviewer
+    action: review_code
+    inputs:
+      code_changes: "{{steps.implement.outputs.code_changes}}"
+    outputs:
+      - review_report
+    next: finalize
+
+  - id: test
+    name: 测试验证
+    agent: sisyphus
+    action: run_tests
+    inputs:
+      tests: "{{steps.implement.outputs.tests}}"
+    outputs:
+      - test_results
+    next: finalize
+
+  - id: finalize
+    name: 完成交付
+    action: complete_feature
+    inputs:
+      review_report: "{{steps.review.outputs.review_report}}"
+      test_results: "{{steps.test.outputs.test_results}}"
+    outputs:
+      - summary
+```
+
+## 使用方式
+
+```bash
+# 启动流程
+acl flow run feature-development \
+  --var feature_name="用户认证模块" \
+  --var tech_stack=react
+```

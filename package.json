@@ -1,0 +1,66 @@
+{
+  "name": "qianqian",
+  "version": "1.0.0",
+  "description": "AI 能力资产管理中枢 - 跨平台 AI 资产同步工具",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "acl": "./bin/cli.js",
+    "qianqian": "./bin/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "lint": "eslint src/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "cursor",
+    "opencode",
+    "claude-code",
+    "prompt",
+    "skill",
+    "agent",
+    "sync",
+    "cli"
+  ],
+  "author": "codertony",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codertony/qianqian.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codertony/qianqian/issues"
+  },
+  "homepage": "https://github.com/codertony/qianqian#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "inquirer": "^9.2.0",
+    "chalk": "^5.3.0",
+    "zod": "^3.22.0",
+    "js-yaml": "^4.1.0",
+    "simple-git": "^3.22.0",
+    "axios": "^1.6.0",
+    "ora": "^8.0.0",
+    "glob": "^10.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/inquirer": "^9.0.0",
+    "@types/js-yaml": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.0",
+    "bun-types": "latest"
+  }
+}
