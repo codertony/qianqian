@@ -189,7 +189,10 @@ export class Logger {
   /**
    * 写入日志
    */
-  private write(entry: LogEntry): void {
+  /**
+   * 写入日志（protected 允许子类覆盖）
+   */
+  protected write(entry: LogEntry): void {
     if (!this.shouldLog(entry.level)) return;
 
     // 写入文件（JSON 格式）

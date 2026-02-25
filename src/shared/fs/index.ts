@@ -7,6 +7,7 @@
  */
 
 import * as fs from 'fs/promises';
+import * as fsSync from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import * as os from 'os';
@@ -364,9 +365,11 @@ export interface FileWatchOptions {
 
 /**
  * 文件监视器
+ /**
+ * 文件监视器
  */
 export class FileWatcher {
-  private watchers: ReturnType<typeof fs.watch>[] = [];
+  private watchers: fsSync.FSWatcher[] = [];
 
   /**
    * 开始监视文件/目录
@@ -378,19 +381,18 @@ export class FileWatcher {
   ): void {
     const normalizedPath = normalizePath(filePath);
 
-    const watcher = fs.watch(
+    const watcher = fsSync.watch(
       normalizedPath,
       { recursive: options.recursive },
-      (eventType: string, filename: Buffer | string | null) => {
+      (eventType: string, filename: string | null) => {
         if (options.ignore && filename) {
-          const filenameStr = filename.toString();
           const shouldIgnore = options.ignore.some((pattern) =>
-            filenameStr.includes(pattern)
+            filename.includes(pattern)
           );
           if (shouldIgnore) return;
         }
 
-        callback(eventType as 'change' | 'rename', filename?.toString() || '');
+        callback(eventType as 'change' | 'rename', filename || '');
       }
     );
 

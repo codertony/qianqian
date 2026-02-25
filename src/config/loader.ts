@@ -8,12 +8,12 @@
 
 import * as path from 'path';
 import * as yaml from 'js-yaml';
-import { Config, ConfigSchema, validateConfigSafe } from '../schema';
-import { fileExists, readFile, resolveHome } from '../../shared/utils';
-import { readYaml, readJson } from '../../shared/fs';
-import { ConfigError, ValidationError } from '../../shared/errors';
-import { logger } from '../../shared/logger';
-import { ACL_DIR, CONFIG_FILE_JSONC } from '../../shared/constants';
+import { Config, validateConfigSafe } from './schema';
+import { fileExists, resolveHome } from '../shared/utils';
+import { readFile, readYaml } from '../shared/fs';
+import { ValidationError } from '../shared/errors';
+import { logger } from '../shared/logger';
+import { ACL_DIR, CONFIG_FILE_JSONC } from '../shared/constants';
 
 /**
  * 配置加载选项
@@ -79,7 +79,7 @@ export class ConfigLoader {
   /**
    * 查找项目配置文件
    */
-  async findProjectConfig(startDir: string = process.cwd()): Promise<string | null> {
+  async findProjectConfig(startDir: string = process.cwd()): Promise<string | undefined> {
     let currentDir = startDir;
 
     while (true) {
@@ -95,7 +95,7 @@ export class ConfigLoader {
       currentDir = parentDir;
     }
 
-    return null;
+    return undefined;
   }
 
   /**
@@ -110,14 +110,15 @@ export class ConfigLoader {
       const ext = path.extname(filePath);
 
       if (ext === '.json' || ext === '.jsonc') {
-        return (await readJson(filePath)) || null;
+        const content = await readFile(filePath);
+        return JSON.parse(content) as Partial<Config>;
       } else if (ext === '.yaml' || ext === '.yml') {
-        return (await readYaml(filePath)) || null;
+        return (await readYaml(filePath)) as Partial<Config>;
       } else {
         // 尝试作为 JSON 解析
         const content = await readFile(filePath);
         try {
-          return JSON.parse(content);
+          return JSON.parse(content) as Partial<Config>;
         } catch {
           // 尝试作为 YAML 解析
           return yaml.load(content) as Partial<Config>;
@@ -185,7 +186,7 @@ export class ConfigLoader {
         'Configuration validation failed',
         'CONFIG_INVALID',
         { errors: validationResult.error.errors },
-        validationResult.error.errors.map((e) => ({
+        validationResult.error.errors.map((e: { path: (string | number)[]; message: string }) => ({
           path: e.path.join('.'),
           message: e.message,
         }))
@@ -284,6 +285,8 @@ export class ConfigLoader {
   }
 }
 
+import { promises as fsp } from 'fs';
+
 /**
  * 写入配置到文件
  */
@@ -296,20 +299,20 @@ export async function writeConfig(
 
   // 确保目录存在
   if (!(await fileExists(dir))) {
-    await fs.mkdir(dir, { recursive: true });
+    await fsp.mkdir(dir, { recursive: true });
   }
 
   const ext = path.extname(normalizedPath);
 
   if (ext === '.yaml' || ext === '.yml') {
-    await fs.writeFile(
+    await fsp.writeFile(
       normalizedPath,
       yaml.dump(config, { indent: 2 }),
       'utf-8'
     );
   } else {
     // 默认使用 JSON
-    await fs.writeFile(
+    await fsp.writeFile(
       normalizedPath,
       JSON.stringify(config, null, 2),
       'utf-8'
@@ -326,15 +329,11 @@ export async function updateConfig(
   filePath: string,
   updates: Partial<Config>
 ): Promise<Config> {
-  const existing = (await readJson(filePath)) || {};
+  const existing = (await readYaml(filePath)) || {};
   const merged = { ...existing, ...updates };
   await writeConfig(filePath, merged);
   return merged as Config;
 }
-
-// 导入 fs 用于 writeConfig
-import { promises as fs } from 'fs';
-import { readJson } from '../../shared/fs';
 
 /**
  * 全局配置加载器实例

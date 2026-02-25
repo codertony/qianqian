@@ -68,14 +68,14 @@ export interface CommandDefinition {
  */
 export class CommandRegistry {
   private commands = new Map<string, CommandDefinition>();
-  private context: Partial<CommandContext>;
+  private context: CommandContext;
 
   constructor(context: Partial<CommandContext> = {}) {
     this.context = {
-      logger,
-      options: { verbose: false, dryRun: false, yes: false },
-      cwd: process.cwd(),
-      ...context,
+      logger: context.logger || logger,
+      options: context.options || { verbose: false, dryRun: false, yes: false },
+      cwd: context.cwd || process.cwd(),
+      config: context.config,
     };
   }
 

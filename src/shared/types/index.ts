@@ -1,13 +1,27 @@
 /**
  * Shared - 类型定义
- * 
+ *
  * 全局共享的类型定义
+ *
+ * @module types
  */
 
-// 资产类型
-export * from '../../core/asset';
-export * from '../../core/platform';
-export * from '../../core/sync';
+// 同步配置
+export interface SyncConfig {
+  autoSync: boolean;
+  syncPolicy: 'full' | 'merge' | 'local' | 'manual';
+  defaultPlatforms: string[];
+  excludePatterns: string[];
+  conflictResolution: 'full' | 'merge' | 'local' | 'manual';
+}
+
+// 平台配置
+export interface PlatformConfig {
+  type: string;
+  enabled: boolean;
+  configPath?: string;
+  overrides?: Record<string, unknown>;
+}
 
 // 配置类型
 export interface Config {
