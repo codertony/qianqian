@@ -266,6 +266,65 @@ export type {
   DependencyCheckResult,
 } from './features/dependency';
 
+// Features - Plugin System Plugin系统
+export {
+  PluginManager,
+  createPluginManager,
+} from './features/plugin';
+
+export type {
+  PluginAsset,
+  PluginManifest,
+  PluginCompatibility,
+  CompatibilityMatrix,
+  InstalledPlugin,
+  PluginInstallOptions,
+  PluginDependency,
+  PluginMarketInfo,
+} from './features/plugin';
+
+// Features - Flow System Flow系统
+export {
+  FlowEngine,
+  createFlowEngine,
+} from './features/flow';
+
+export type {
+  FlowDefinition,
+  FlowNode,
+  FlowEdge,
+  FlowTrigger,
+  FlowVariable,
+  FlowExecution,
+  FlowValidation,
+} from './features/flow';
+
+
+// Features - Market Connector 市场连接器
+export {
+  MarketConnector,
+  createMarketConnector,
+} from './features/market';
+
+export type {
+  MarketSource,
+} from './features/market';
+
+// Features - MCP Config MCP配置
+export {
+  MCPConfigManager,
+  createMCPConfigManager,
+} from './features/mcp';
+
+export type {
+  MCPConfig,
+} from './features/mcp';
+
+// Features - Compatibility System 兼容性系统
+export {
+  CompatibilityChecker,
+  createCompatibilityChecker,
+} from './features/compatibility';
 // 版本信息
 export const VERSION = '1.0.0';
 export const NAME = 'qianqian';
