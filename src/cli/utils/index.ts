@@ -294,3 +294,25 @@ export function separator(): string {
 export function newline(count = 1): void {
   console.log('\n'.repeat(count - 1));
 }
+
+/**
+ * 获取 Spinner 实例
+ */
+export function getSpinner(): Spinner {
+  return new Spinner();
+}
+
+/**
+ * 确认提示 (别名)
+ */
+export const promptConfirm = confirm;
+
+/**
+ * 输入提示 (别名)
+ */
+export const promptInput = input;
+
+/**
+ * 选择提示 (别名)
+ */
+export const promptSelect = select;

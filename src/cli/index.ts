@@ -14,6 +14,7 @@ import { statusCommand } from './commands/status.js';
 import { listCommand } from './commands/list.js';
 import { showCommand } from './commands/show.js';
 import { diffCommand } from './commands/diff.js';
+import { commitCommand } from './commands/commit.js';
 import { configCommand } from './config-manager/index.js';
 import { doctorCommand } from './doctor/index.js';
 import { APP_NAME, APP_DISPLAY_NAME, APP_VERSION, APP_DESCRIPTION } from '../shared/constants/index.js';
@@ -40,6 +41,7 @@ export function createCLI(): Command {
   program.addCommand(listCommand());
   program.addCommand(showCommand());
   program.addCommand(diffCommand());
+  program.addCommand(commitCommand());
   program.addCommand(configCommand());
   program.addCommand(doctorCommand());
 
@@ -68,3 +70,4 @@ export * from './commands/status.js';
 export * from './commands/list.js';
 export * from './commands/show.js';
 export * from './commands/diff.js';
+export * from './commands/commit.js';

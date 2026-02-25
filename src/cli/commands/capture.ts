@@ -33,7 +33,19 @@ export function captureCommand(): Command {
       
       console.log(chalk.blue('🔍 检测当前环境...\n'));
       
+      if (options.ai) {
+        const apiKey = process.env.ANTHROPIC_API_KEY || process.env.OPENAI_API_KEY;
+        if (!apiKey) {
+          console.log(chalk.yellow('⚠️  未配置 AI API Key'));
+          console.log(chalk.gray('请设置 ANTHROPIC_API_KEY 或 OPENAI_API_KEY 环境变量'));
+          return;
+        }
+        console.log(chalk.blue('🤖 AI 辅助模式已启用'));
+        console.log(chalk.gray('AI Provider: ' + (process.env.ANTHROPIC_API_KEY ? 'Anthropic' : 'OpenAI')));
+      }
+
       // TODO: 实现环境检测和资产捕获逻辑
+      console.log(chalk.yellow('\n⚠️  此命令尚未实现完整功能\n'));
       console.log(chalk.yellow('⚠️  此命令尚未实现完整功能\n'));
       
       console.log('计划捕获的资产:');
