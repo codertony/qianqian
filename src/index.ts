@@ -197,6 +197,23 @@ export {
 
 export { createCLI, runCLI } from './cli';
 
+// Adapters 适配器
+export {
+  CursorAdapter,
+  createCursorAdapter,
+} from './adapters/cursor';
+
+export {
+  OpenCodeAdapter,
+  createOpenCodeAdapter,
+} from './adapters/opencode';
+
+// Core - Sync 同步引擎
+export {
+  GitSyncEngine,
+  createGitSyncEngine,
+} from './core/sync/git-sync-engine';
+
 // 版本信息
 export const VERSION = '1.0.0';
 export const NAME = 'qianqian';

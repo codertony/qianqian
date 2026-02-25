@@ -1,7 +1,11 @@
+import { AssetType } from '../asset';
+
 /**
  * Core - 平台领域
- * 
+ *
  * 定义支持的平台（Cursor/OpenCode/ClaudeCode/CloudCode）
+ *
+ * @module platform
  */
 
 // 平台类型
@@ -45,19 +49,19 @@ export interface PlatformConfig {
 // 平台适配器接口
 export interface PlatformAdapter {
   readonly platform: Platform;
-  
+
   // 检测当前环境是否支持该平台
   detect(): Promise<boolean>;
-  
+
   // 读取该平台配置
   readConfig(): Promise<Record<string, unknown>>;
-  
+
   // 写入配置到该平台
   writeConfig(config: Record<string, unknown>): Promise<void>;
-  
+
   // 验证资产是否兼容该平台
   validateAsset(assetType: AssetType): boolean;
-  
+
   // 转换资产为该平台格式
   convertAsset<T>(asset: unknown): Promise<T>;
 }
@@ -148,5 +152,8 @@ export const PLATFORMS: Record<PlatformType, Platform> = {
   },
 };
 
-// 导入 AssetType
-import { AssetType } from '../asset';
+// 创建平台适配器
+export function createAdapter(type: PlatformType): PlatformAdapter | null {
+  // TODO: 实现具体的适配器创建逻辑
+  return null;
+}
