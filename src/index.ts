@@ -214,6 +214,33 @@ export {
   createGitSyncEngine,
 } from './core/sync/git-sync-engine';
 
+
+// Features - AI 功能
+export {
+  AIProviderType,
+  AIMessageRole,
+  AITaskType,
+  AnthropicProvider,
+  OpenAIProvider,
+  AIProviderFactory,
+  createAIProviderFactory,
+  RateLimiter,
+  TokenBudgetManager,
+} from './features/ai';
+
+export type {
+  AIProvider,
+  AIMessage,
+  AICallOptions,
+  AICallResult,
+  AIProviderConfig,
+  AIConfig,
+  TokenBudgetConfig,
+  RateLimitConfig,
+  AITaskOptions,
+  AITaskResult,
+} from './features/ai';
+
 // 版本信息
 export const VERSION = '1.0.0';
 export const NAME = 'qianqian';
