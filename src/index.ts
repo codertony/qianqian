@@ -330,3 +330,60 @@ export const VERSION = '1.0.0';
 export const NAME = 'qianqian';
 export const DISPLAY_NAME = '乾乾';
 export const DESCRIPTION = 'AI 能力资产管理中枢';
+
+
+// Features - Version Manager 版本管理器
+export {
+  VersionManager,
+  createVersionManager,
+  DowngradeStrategy,
+} from './features/version/manager';
+
+export type {
+  VersionInfo,
+  VersionLock,
+  DowngradeResult,
+} from './features/version/manager';
+
+// Features - Session State 会话状态
+export {
+  SessionStateManager,
+  createSessionStateManager,
+} from './features/session/state-manager';
+
+export type {
+  SessionState,
+  StateSyncResult,
+} from './features/session/state-manager';
+
+// Features - Security Scanner 安全扫描器
+export {
+  SecurityScanner,
+  createSecurityScanner,
+} from './features/security/scanner';
+
+export type {
+  ScanResult,
+} from './features/security/scanner';
+
+// Features - Performance Optimizer 性能优化器
+export {
+  PerformanceOptimizer,
+  createPerformanceOptimizer,
+} from './features/performance/optimizer';
+
+export type {
+  PerformanceMetrics,
+} from './features/performance/optimizer';
+
+// Adapters - Claude Code
+export {
+  ClaudeCodeAdapter,
+  createClaudeCodeAdapter,
+} from './adapters/claude-code';
+
+// Adapters - Cloud Code
+export {
+  CloudCodeAdapter,
+  createCloudCodeAdapter,
+} from './adapters/cloud-code';
