@@ -162,7 +162,7 @@ export class CommandRegistry {
 
       // 如果命令需要配置，加载配置
       if (def.requireConfig && !context.config) {
-        const { loadConfig } = await import('../config/loader');
+        const { loadConfig } = await import('../config/loader.js');
         try {
           context.config = await loadConfig();
         } catch (error) {
