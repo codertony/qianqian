@@ -62,6 +62,11 @@ export const ASSET_EXTENSIONS: Record<string, string> = {
 export const DEFAULT_BRANCH = 'main';
 export const DEFAULT_REMOTE = 'origin';
 
+// Re-export aliases used by CLI
+export const VERSION = APP_VERSION;
+export const NAME = APP_NAME;
+export const DESCRIPTION = APP_DESCRIPTION;
+
 // 错误码
 export const ERROR_CODES = {
   // 配置错误
